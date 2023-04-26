@@ -46,6 +46,6 @@ public class PlayerStats : MonoBehaviour
     public void DashOpen()
     {
         isDashOpened = true;
-        gameObject.GetComponent<PlayerMove>().GetDashImage().gameObject.SetActive(true);
+        GameManager.instance.ui.GetDashImage().gameObject.SetActive(true);
     }
 }

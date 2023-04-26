@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
     private bool isDashing;
 
     private bool isCanJumping;
-    [SerializeField] private bool isJumping =true;
+    [SerializeField] private bool isJumping = false;
     
     private bool isdoubleJumping;
     private float coyoteTime = 0.2f;
@@ -23,7 +23,6 @@ public class PlayerMove : MonoBehaviour
     private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
-    [SerializeField] private Image dashSkill;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -74,7 +73,6 @@ public class PlayerMove : MonoBehaviour
         }
         Flip();
     }
-
     private void FixedUpdate()
     {
         if (isDashing)
@@ -103,10 +101,6 @@ public class PlayerMove : MonoBehaviour
 
         //    coyoteTimeCounter = 0f;
         //}
-    }
-    public Image GetDashImage()
-    {
-        return dashSkill;
     }
     private bool IsGrounded()
     {
@@ -138,12 +132,12 @@ public class PlayerMove : MonoBehaviour
         isDashing = false;
         for (int i = 0; i < 100; i++)
         {
-            dashSkill.fillAmount = (float)i / playerStats.GetdashingCooldown() / 100;
+            GameManager.instance.ui.GetDashImage().fillAmount = (float)i / playerStats.GetdashingCooldown() / 100;
             yield return new WaitForSeconds((float)playerStats.GetdashingCooldown() / 100);
         }
 
         yield return new WaitForEndOfFrame();
-        dashSkill.fillAmount = 1;
+        GameManager.instance.ui.GetDashImage().fillAmount = 1;
         canDash = true;
     }
 }
