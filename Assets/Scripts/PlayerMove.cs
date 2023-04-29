@@ -13,6 +13,7 @@ public class PlayerMove : MonoBehaviour
     private bool canDash = true;
     private bool isDashing;
 
+    private bool isTalking;
     private bool isCanJumping;
     [SerializeField] private bool isJumping = false;
     
@@ -105,6 +106,14 @@ public class PlayerMove : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+    }
+    public void isTalkingTrue()
+    {
+        isTalking = true;
+    }
+    public void isTalkingFalse()
+    {
+        isTalking = false;
     }
     private void Flip() // 뒤보는지 앞보는지 체크
     {

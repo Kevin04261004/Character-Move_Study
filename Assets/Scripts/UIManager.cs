@@ -16,7 +16,10 @@ public class UIManager : MonoBehaviour
     }
     public void TalkPanel_Change(string name, string content = null)
     {
-        TalkPanel_Image.gameObject.SetActive(true);
+        if(!TalkPanel_Image.gameObject.activeSelf)
+        {
+            TalkPanel_Image.gameObject.SetActive(true);
+        }
         if (content == null)
         {
             TalkPanel_Image.gameObject.SetActive(false);
@@ -25,6 +28,22 @@ public class UIManager : MonoBehaviour
         {
             TalkPanel_Name_TMP.text = name;
             TalkPanel_Content_TMP.text = content;
+        }
+    }
+    public void TalkPanel_Change_WithTyping(string name, string content=null,int typingIndex=0)
+    {
+        if (!TalkPanel_Image.gameObject.activeSelf)
+        {
+            TalkPanel_Image.gameObject.SetActive(true);
+        }
+        if (content == null)
+        {
+            TalkPanel_Image.gameObject.SetActive(false);
+        }
+        else
+        {
+            TalkPanel_Name_TMP.text = name;
+            TalkPanel_Content_TMP.text = content.Substring(0,typingIndex);
         }
     }
     public void TalkPanel_Close()

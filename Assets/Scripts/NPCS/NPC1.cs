@@ -2,37 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class NPC1_Talk_Data
-{
-    public TalkData[] NPC1_Talk_0;
-}
 public class NPC1 : NPC
 {
-    public TextAsset data;
-    public NPC1_Talk_Data datas;
-    private void Awake()
+    public Dialogue[] NPC1_Talk_0;
+    private void Start()
     {
-        datas = JsonUtility.FromJson<NPC1_Talk_Data>(data.text);
+        NPC1_Talk_0 = gameObject.GetComponent<InteractionEvent>().GetDialogue();
     }
     private void Update()
     {
-        if (isOpened)
+        if(isPlayerEnter && Input.GetKeyDown(KeyCode.F) && !reader.GetisReading())
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                ContentIndex++;
-                if (ContentIndex >= datas.NPC1_Talk_0.Length)
-                {
-                    ContentIndex = -1;
-                    GameManager.instance.playerStats.DashOpen();
-                    GameManager.instance.ui.TalkPanel_Close();
-                }
-                else
-                {
-                    GameManager.instance.ui.TalkPanel_Change(datas.NPC1_Talk_0[ContentIndex].name, datas.NPC1_Talk_0[ContentIndex].content);
-                }
-            }
+            GameManager.instance.playerMove.isTalkingTrue();
+            reader.SetDialogue(NPC1_Talk_0,gameObject);
         }
+        if(isReaded)
+        {
+            GameManager.instance.playerStats.DashOpen();
+            isReaded = false;
+            //두번째로 봤을때 내용 바뀌게 하고 싶을때 if문 추가해서 ㅇㅇ
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        isPlayerEnter = true;
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isPlayerEnter = false;
+        GameManager.instance.playerMove.isTalkingFalse();
     }
 }
