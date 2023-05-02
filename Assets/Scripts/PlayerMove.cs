@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         bool isGround = IsGrounded();
-        if (isDashing)
+        if (isDashing || isTalking)
         {
             return;
         }
